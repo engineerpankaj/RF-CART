@@ -1,0 +1,49 @@
+# To create a linear regression:
+x=c(some values)
+y=c(some other values)
+relation=lm(y~x) enter
+summary(relation)enter
+where y is dependent variable and x is independent variable, so dependent variable comes first lm(y~x).
+
+
+# For multi variables/ Multi Regression:
+
+-Import excel file into R then give the file name . example:
+Evapo=read.csv("C:\\Users\\suman markuna\\Desktop\\Dr.P.K.csv",header=T)
+Evapo enter
+
+-Then to check the structure:
+str(Evapo)
+
+-Then for Regression Analysis:
+Reg=lm(E~Tmax+Tmin+Rh1+W,data=Evapo)
+summary(Reg)
+
+-If we wants to predict dependent variable by using some data of independent variable for future reference . example:
+predict(Reg,data.frame("Tmax"=50,"Tmin"=20,"Rh1"=96,"W"=5))
+str(Evapo)
+where; Tmax,Tmin,Rh1,w are independent and E is dependent variable. And Evapo is a file name in the above example.s
+
+-If we forget the no of variables in the file because of large data then we can use to remember the variables as in short forms:
+head(filename)  example:
+head(Evapo)
+
+-If we wants to plot observed data from the data which is given as a dependent variable such as:
+Eo=Evapo$E
+plot(Eo)
+where Eo= observed evaporation data as the data given by sir.
+Ep=predict(Reg,data=Evapo)
+head(Ep)
+
+-To plot the data between observed and predicted values:
+plot(Eo,Ep)
+where Ep= Predicted evaporation
+
+-To find correaltion between Eo and Ep:
+cor(Eo,Ep)
+
+
+#For correlation:
+cor(E,Tmax,Tmin,Rh1,W)
+cor(Evapo)
+pairs(Evapo)

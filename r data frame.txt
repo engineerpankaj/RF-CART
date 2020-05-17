@@ -1,0 +1,6 @@
+# Create a data frame with maximum temperature for ...days
+# The three columns are assumed id(a character),day(numeric),and tmax(numeric)
+data=data.frame(id=c("a","b","c"...),day=c(some numeric values),tma=c(some numeric values))
+data enter
+
+# Subscripting works as for matrices

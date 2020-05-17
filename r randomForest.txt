@@ -1,0 +1,56 @@
+## FOR RANDOMFOREST:
+
+1 evap=read.csv("C:\\Users\\suman markuna\\Desktop\\suman papers\\Dr.P.K.csv")
+2 evap
+3 summary(evap)
+4 str(evap)
+5 train=evap[1:156,]
+6 train
+7 library(randomForest)
+8 rf=randomForest(E~Tmax+Tmin+Rh1+W,train)
+9 print(rf)
+10 summary(rf)
+11 attributes(rf)
+
+# select any one attribute from above then it will show its type of data:
+
+12 rf$type
+13 rf$call
+14 library(caret)
+15 Ep=predict(rf,train)
+16 Ep
+17 head(train$E)
+18 head(Ep)
+19 test=evap[157:208,]
+20 test
+21 e=test$E
+22 rf2=randomForest(e~Tmax+Tmin+Rh1+W,test)
+23 rf2
+24 ep=predict(rf2,test)
+25 ep
+26 plot(rf2)
+27 t=tuneRF(train[,-4],train[,4],stepFactor=0.5,plot=TRUE,ntreeTRy=500,trace=TRUE,improve=0.05)
+28 rf=randomForest(E~Tmax+Tmin+Rh1+W,train,ntree=500,mtry=4,importance=TRUE,proximity=TRUE)
+29 rf
+30 hist(treesize(rf),main="No. of Nodes for the Trees",col="green")
+31 importance(rf)
+32 
+
+## FOR Coefficient of determination
+
+library(caret)
+res=caret::postResample(e1,ep1)
+rsq=res[2]
+
+
+
+
+
+
+
+
+
+
+
+
+

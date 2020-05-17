@@ -1,0 +1,71 @@
+evap=read.csv("C:\\Users\\suman markuna\\Desktop\\Dr.P.K.csv",header=T)
+ evap
+train=evap[1:156,]
+T1=train$Tmax
+T2=train$Tmin
+R=train$Rh1
+W=train$W
+E=train$E
+ObservedE=train$E
+svmreg=svm(ObservedE~T1+T2+R+W,train)
+ summary(svmreg)
+PredictedE=predict(svmreg)
+PredictedE
+plot(ObservedE)
+lines(lowess(ObservedE))
+ plot(PredictedE)
+lines(lowess(PredictedE))
+plot(ObservedE,PredictedE,col="red")
+lines(lowess(ObservedE,PredictedE))
+
+## For export in excel for train data:
+mydata=data.frame(Eo,Ep)      where Eo is observedE and Ep is predicted Ep.
+write.xlsx(mydata,"evapdata.xlsx")
+
+
+##For ggplot train
+data=data.frame(Eo,Ep)
+data
+ggplot(data,aes(Eo,Ep))+geom_point()
+ggplot(data,aes(Eo,Ep))+geom_point()+stat_smooth(method="svm",col="#C42126",se=FALSE,size=1)
+
+cor(ObservedE,PredictedE)
+RMSE=rmse(ObservedE,PredictedE)
+RMSE
+w = t(svmreg$coefs) %*% svmreg$SV
+w
+b = svmreg$rho
+b
+Opttrain=tune(svm, PredictedE~ObservedE,train,ranges=list(elsilon=seq(0,1,0.1), cost=1:100))
+summary(svmreg)$r.squared
+
+# for test
+test=evap[157:208,]
+test
+ObservedEo=test$E
+svmrg=svm(ObservedEo~Tmax+Tmin+Rh1+W,test)
+svmrg
+PredictedEp=predict(svmrg,test)
+PredictedEp
+plot(ObservedEo,PredictedEp,col="blue")
+lines(lowess(ObservedEo,PredictedEp))
+cor(ObservedEo,PredictedEp)
+RMSE=rmse(ObservedEo,PredictedEp)
+RMSE
+ w = t(svmrg$coefs) %*% svmrg$SV
+ w
+b = svmrg$rho
+ b
+
+
+
+#### all statistical parameters
+library(hydroGof)
+gof(observed,predicted)
+
+
+
+
+
+
+
